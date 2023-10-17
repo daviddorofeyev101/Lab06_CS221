@@ -1,0 +1,27 @@
+David Dorofeyev
+CPSC-221-002
+
+    There was a total of 3 bugs that solved the issue, and here is how I debugged the code:
+
+                                                        Bug 1:
+    After running the SetTester class, the first failed test I noticed was the emptySet_testIsEmpty in the NEW EMPTY SET. 
+I found that name using ctr+F in the SetTester and added a breakpoint in there. When running throught the debugger,
+it was failing in that spot exact line, so I stepped into the methods, until I got to the isEmpty() method. In that method
+I saw "return (rear > 0);" which clearly is not returning a boolean, its simply a comparison. So I added an if-else statement 
+to both the true and false conditions, then it passes that test. At this point, NEW EMPTY section was complete. 
+
+                                                        Bug 2:
+    Using the same technique as above, I did the same with the next error which was in the SCENARIO: [ ] -> add(A) -> [A].
+The first fail in the ADD section, was the emptySet_addA_A_testIsEmpty. I found it in SetTester, and began debugging. As I stepped
+into the code, the array wasn't adding up correctly. So in my add() method, I noticed I was getting incorrect values right When
+I get out of the first if() statement, so I incremented the index variable rear. After this change, I ran the code, and most of the
+tests were passing.
+
+                                                        Bug 3:
+    There were only two tests that weren't passing at this moment, and it was index out of bounds exceptions beginning in the
+SCENARIO: [A] -> add(B) -> [A,B], then the SCENARIO: [A,B] -> remove(A) -> [B], and finally SCENARIO: [A,B] -> remove(B) -> [A].
+These were all "java.lang.ArrayIndexOutOfBoundsException: Index 2 out of bounds for length 2" exceptions. Steping into the code,
+it led me to the remove() method. As I started steping over the code, everything looked fine until I reached the nested while
+loop. The conditions threw off the index for the array that was instantiated inside the while loop. First I tried decrementing it
+but it gave me another out of bounds exception called: "java.lang.ArrayIndexOutOfBoundsException: Index -1 out of bounds for length 4".
+Then I tried subtracting rear by one, and finally when I ran it, all the tests passed succesfully.
